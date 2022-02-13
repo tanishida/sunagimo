@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Button, TextField, Snackbar} from '@mui/material';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface props {}
+interface state {
+    open: boolean,
+    value: string,
+    message: string
 }
 
-export default App;
+export class App extends React.Component<props, state> {
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      open: false,
+      value: '',
+      message: ''
+    }
+  }
+  handleChange(e: any) {
+    this.setState({value: e.target.value});
+  }
+  onLogin() {
+    this.setState({message: '登録しました！'});
+    this.setState({open: true});
+  }
+  render() {
+      return (
+        <div>
+          <Snackbar open={this.state.open} message={this.state.message} />
+          <TextField value={this.state.value} onChange={(e: any) => this.handleChange(e)} type={'text'} />
+          <Button variant="contained" onClick={() => this.onLogin()}>送信</Button>
+        </div>
+      )
+  }
+}
